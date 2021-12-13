@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E98AE930276724D500BE562D /* Concentration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98AE92F276724D500BE562D /* Concentration.swift */; };
+		E98AE9322767263500BE562D /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98AE9312767263500BE562D /* Card.swift */; };
 		E9CA1167275D2035007A7CAD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1166275D2035007A7CAD /* AppDelegate.swift */; };
 		E9CA1169275D2035007A7CAD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA1168275D2035007A7CAD /* SceneDelegate.swift */; };
 		E9CA116B275D2035007A7CAD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CA116A275D2035007A7CAD /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E98AE92F276724D500BE562D /* Concentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Concentration.swift; sourceTree = "<group>"; };
+		E98AE9312767263500BE562D /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		E9CA1163275D2035007A7CAD /* Concentration.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Concentration.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9CA1166275D2035007A7CAD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9CA1168275D2035007A7CAD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 				E9CA1166275D2035007A7CAD /* AppDelegate.swift */,
 				E9CA1168275D2035007A7CAD /* SceneDelegate.swift */,
 				E9CA116A275D2035007A7CAD /* ViewController.swift */,
+				E98AE92F276724D500BE562D /* Concentration.swift */,
+				E98AE9312767263500BE562D /* Card.swift */,
 				E9CA116C275D2035007A7CAD /* Main.storyboard */,
 				E9CA116F275D2035007A7CAD /* Assets.xcassets */,
 				E9CA1171275D2035007A7CAD /* LaunchScreen.storyboard */,
@@ -139,6 +145,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9CA116B275D2035007A7CAD /* ViewController.swift in Sources */,
+				E98AE930276724D500BE562D /* Concentration.swift in Sources */,
+				E98AE9322767263500BE562D /* Card.swift in Sources */,
 				E9CA1167275D2035007A7CAD /* AppDelegate.swift in Sources */,
 				E9CA1169275D2035007A7CAD /* SceneDelegate.swift in Sources */,
 			);
