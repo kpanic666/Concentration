@@ -12,7 +12,13 @@ class Concentration {
     var indexOfOneAndOnlyFaceUpCard: Int?
     
     init(numberOfPairsOfCards: Int) {
-        for _ in 0..<numberOfPairsOfCards {
+        refillCards(numberOfCards: numberOfPairsOfCards * 2)
+    }
+    
+    private func refillCards(numberOfCards: Int) {
+        cards.removeAll(keepingCapacity: true)
+        
+        for _ in 0..<(numberOfCards / 2) {
             let card = Card()
             cards += [card, card]
         }
@@ -40,5 +46,10 @@ class Concentration {
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
+    }
+    
+    func resetState() {
+        refillCards(numberOfCards: cards.count)
+        indexOfOneAndOnlyFaceUpCard = nil
     }
 }
