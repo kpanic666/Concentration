@@ -9,9 +9,10 @@ import Foundation
 
 class Concentration {
     var cards = [Card]()
-    var indexOfOneAndOnlyFaceUpCard: Int?
+    private var indexOfOneAndOnlyFaceUpCard: Int?
     var score = 0
     var flips = 0
+    private var startGameTime = Date()
     
     init(numberOfPairsOfCards: Int) {
         refillCards(numberOfCards: numberOfPairsOfCards * 2)
@@ -36,10 +37,8 @@ class Concentration {
             if cards[matchIndex].identifier == cards[index].identifier {
                 cards[matchIndex].isMatched = true
                 cards[index].isMatched = true
-                score += 2
-            } else {
-                score += (cards[matchIndex].isAlreadySeen ? -1 : 0) + (cards[index].isAlreadySeen ? -1 : 0)
             }
+            score += calculateScoreForCards(index1: matchIndex, index2: index)
             indexOfOneAndOnlyFaceUpCard = nil
         } else {
             // either no cards or 2 cards are face up
@@ -56,10 +55,33 @@ class Concentration {
         flips += 1
     }
     
+    /// Calculate score for match situation and penalty if cards already was seen.
+    /// Takes into account bonus time from start of the game when all scores and penalties are calculating at highest rates.
+    private func calculateScoreForCards(index1: Int, index2: Int) -> Int {
+        var bonusTimeMatchScore = 2
+        var bonusTimePenaltyScore = -1
+        
+        let bonusTimeLeft = Int(30.0 - Date().timeIntervalSince(startGameTime))
+        if bonusTimeLeft > 0  {
+            bonusTimeMatchScore *= bonusTimeLeft
+            bonusTimePenaltyScore *= bonusTimeLeft
+            print(bonusTimeLeft)
+            print(bonusTimeMatchScore)
+            print(bonusTimePenaltyScore)
+        }
+        
+        if cards[index1].identifier == cards[index2].identifier {
+            return bonusTimeMatchScore
+        } else {
+            return (cards[index1].isAlreadySeen ? bonusTimePenaltyScore : 0) + (cards[index2].isAlreadySeen ? bonusTimePenaltyScore : 0)
+        }
+    }
+    
     func resetState() {
         refillCards(numberOfCards: cards.count)
         indexOfOneAndOnlyFaceUpCard = nil
         score = 0
         flips = 0
+        startGameTime = Date()
     }
 }
