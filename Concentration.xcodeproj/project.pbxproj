@@ -67,11 +67,11 @@
 				E9CA116A275D2035007A7CAD /* ViewController.swift */,
 				E98AE92F276724D500BE562D /* Concentration.swift */,
 				E98AE9312767263500BE562D /* Card.swift */,
+				E98AE9332767765C00BE562D /* Theme.swift */,
 				E9CA116C275D2035007A7CAD /* Main.storyboard */,
 				E9CA116F275D2035007A7CAD /* Assets.xcassets */,
 				E9CA1171275D2035007A7CAD /* LaunchScreen.storyboard */,
 				E9CA1174275D2035007A7CAD /* Info.plist */,
-				E98AE9332767765C00BE562D /* Theme.swift */,
 			);
 			path = Concentration;
 			sourceTree = "<group>";

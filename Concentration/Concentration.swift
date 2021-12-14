@@ -10,6 +10,8 @@ import Foundation
 class Concentration {
     var cards = [Card]()
     var indexOfOneAndOnlyFaceUpCard: Int?
+    var score = 0
+    var flips = 0
     
     init(numberOfPairsOfCards: Int) {
         refillCards(numberOfCards: numberOfPairsOfCards * 2)
@@ -27,29 +29,37 @@ class Concentration {
     }
     
     func chooseCard(at index: Int) {
-        if !cards[index].isMatched {
-            if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
-                // check if cards match
-                if cards[matchIndex].identifier == cards[index].identifier {
-                    cards[matchIndex].isMatched = true
-                    cards[index].isMatched = true
-                }
-                
-                cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = nil
+        guard !cards[index].isMatched else { return }
+        
+        if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
+            // check if cards match
+            if cards[matchIndex].identifier == cards[index].identifier {
+                cards[matchIndex].isMatched = true
+                cards[index].isMatched = true
+                score += 2
             } else {
-                // either no cards or 2 cards are face up
-                for flipDownIndex in cards.indices {
+                score += (cards[matchIndex].isAlreadySeen ? -1 : 0) + (cards[index].isAlreadySeen ? -1 : 0)
+            }
+            indexOfOneAndOnlyFaceUpCard = nil
+        } else {
+            // either no cards or 2 cards are face up
+            for flipDownIndex in cards.indices {
+                if cards[flipDownIndex].isFaceUp {
+                    cards[flipDownIndex].isAlreadySeen = true
                     cards[flipDownIndex].isFaceUp = false
                 }
-                cards[index].isFaceUp = true
-                indexOfOneAndOnlyFaceUpCard = index
             }
+            indexOfOneAndOnlyFaceUpCard = index
         }
+        
+        cards[index].isFaceUp = true
+        flips += 1
     }
     
     func resetState() {
         refillCards(numberOfCards: cards.count)
         indexOfOneAndOnlyFaceUpCard = nil
+        score = 0
+        flips = 0
     }
 }
