@@ -8,10 +8,31 @@
 import Foundation
 
 class Concentration {
-    var cards = [Card]()
-    private var indexOfOneAndOnlyFaceUpCard: Int?
-    var score = 0
-    var flips = 0
+    private(set) var cards = [Card]()
+    
+    private var indexOfOneAndOnlyFaceUpCard: Int? {
+        get {
+            var foundIndex: Int?
+            for index in cards.indices {
+                guard cards[index].isFaceUp else { continue }
+                if foundIndex == nil {
+                    foundIndex = index
+                } else {
+                    return nil
+                }
+            }
+            return foundIndex
+        }
+         
+        set {
+            for index in cards.indices {
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
+    
+    private(set) var score = 0
+    private(set) var flips = 0
     private var startGameTime = Date()
     
     init(numberOfPairsOfCards: Int) {
@@ -39,19 +60,17 @@ class Concentration {
                 cards[index].isMatched = true
             }
             score += calculateScoreForCards(index1: matchIndex, index2: index)
-            indexOfOneAndOnlyFaceUpCard = nil
+            cards[index].isFaceUp = true
         } else {
             // either no cards or 2 cards are face up
             for flipDownIndex in cards.indices {
                 if cards[flipDownIndex].isFaceUp {
                     cards[flipDownIndex].isAlreadySeen = true
-                    cards[flipDownIndex].isFaceUp = false
                 }
             }
             indexOfOneAndOnlyFaceUpCard = index
         }
         
-        cards[index].isFaceUp = true
         flips += 1
     }
     
@@ -65,9 +84,6 @@ class Concentration {
         if bonusTimeLeft > 0  {
             bonusTimeMatchScore *= bonusTimeLeft
             bonusTimePenaltyScore *= bonusTimeLeft
-            print(bonusTimeLeft)
-            print(bonusTimeMatchScore)
-            print(bonusTimePenaltyScore)
         }
         
         if cards[index1].identifier == cards[index2].identifier {

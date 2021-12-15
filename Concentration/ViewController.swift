@@ -8,13 +8,18 @@
 import UIKit
 
 class ViewController: UIViewController {
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count + 1) / 2)
-    lazy var themeManager = ThemeManager.main
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     
-    var emoji = [Int: String]()
-    var emojiPool = [String]()
+    var numberOfPairsOfCards: Int {
+        (cardButtons.count + 1) / 2
+    }
     
-    var currentTheme: Theme! {
+    private lazy var themeManager = ThemeManager.main
+    
+    private var emoji = [Int: String]()
+    private var emojiPool = [String]()
+    
+    private var currentTheme: Theme! {
         didSet {
             flipCountLabel.textColor = UIColor(named: currentTheme.otherElementsColorAssetName)
             scoreLabel.textColor = UIColor(named: currentTheme.otherElementsColorAssetName)
@@ -30,10 +35,10 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var flipCountLabel: UILabel!
-    @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet weak var newGameBtn: UIButton!
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var flipCountLabel: UILabel!
+    @IBOutlet private weak var scoreLabel: UILabel!
+    @IBOutlet private weak var newGameBtn: UIButton!
     
     override func viewDidLoad() {
         setRandomTheme()
@@ -54,11 +59,11 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    func setRandomTheme() {
+    private func setRandomTheme() {
         currentTheme = themeManager.getRandomTheme()
     }
     
-    func updateViewFromModel() {
+    private func updateViewFromModel() {
         for index in cardButtons.indices {
             let button = cardButtons[index]
             let card = game.cards[index]
@@ -76,7 +81,7 @@ class ViewController: UIViewController {
         scoreLabel.text = "Score: \(game.score)"
     }
     
-    func emoji(for card: Card) -> String {
+    private func emoji(for card: Card) -> String {
         if emoji[card.identifier] == nil, emojiPool.count > 0 {
             let randomIndex = Int.random(in: 0 ..< emojiPool.count)
             emoji[card.identifier] = emojiPool.remove(at: randomIndex)
