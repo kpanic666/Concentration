@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     
     private lazy var themeManager = ThemeManager.main
     
-    private var emoji = [Int: String]()
+    private var emoji = [Card: String]()
     private var emojiPool = [String]()
     
     private var currentTheme: Theme! {
@@ -82,11 +82,11 @@ class ViewController: UIViewController {
     }
     
     private func emoji(for card: Card) -> String {
-        if emoji[card.identifier] == nil, emojiPool.count > 0 {
+        if emoji[card] == nil, emojiPool.count > 0 {
             let randomIndex = Int.random(in: 0 ..< emojiPool.count)
-            emoji[card.identifier] = emojiPool.remove(at: randomIndex)
+            emoji[card] = emojiPool.remove(at: randomIndex)
         }
         
-        return emoji[card.identifier, default: "?"]
+        return emoji[card, default: "?"]
     }
 }

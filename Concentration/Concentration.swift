@@ -7,21 +7,13 @@
 
 import Foundation
 
-class Concentration {
+struct Concentration {
     private(set) var cards = [Card]()
     
     private var indexOfOneAndOnlyFaceUpCard: Int? {
         get {
-            var foundIndex: Int?
-            for index in cards.indices {
-                guard cards[index].isFaceUp else { continue }
-                if foundIndex == nil {
-                    foundIndex = index
-                } else {
-                    return nil
-                }
-            }
-            return foundIndex
+            let faceUpCardIndices = cards.indices.filter { cards[$0].isFaceUp }
+            return faceUpCardIndices.count == 1 ? faceUpCardIndices.first : nil
         }
          
         set {
@@ -39,7 +31,7 @@ class Concentration {
         refillCards(numberOfCards: numberOfPairsOfCards * 2)
     }
     
-    private func refillCards(numberOfCards: Int) {
+    mutating private func refillCards(numberOfCards: Int) {
         cards.removeAll(keepingCapacity: true)
         
         for _ in 0..<(numberOfCards / 2) {
@@ -50,12 +42,12 @@ class Concentration {
         cards.shuffle()
     }
     
-    func chooseCard(at index: Int) {
+    mutating func chooseCard(at index: Int) {
         guard !cards[index].isMatched else { return }
         
         if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
             // check if cards match
-            if cards[matchIndex].identifier == cards[index].identifier {
+            if cards[matchIndex] == cards[index] {
                 cards[matchIndex].isMatched = true
                 cards[index].isMatched = true
             }
@@ -86,14 +78,14 @@ class Concentration {
             bonusTimePenaltyScore *= bonusTimeLeft
         }
         
-        if cards[index1].identifier == cards[index2].identifier {
+        if cards[index1] == cards[index2] {
             return bonusTimeMatchScore
         } else {
             return (cards[index1].isAlreadySeen ? bonusTimePenaltyScore : 0) + (cards[index2].isAlreadySeen ? bonusTimePenaltyScore : 0)
         }
     }
     
-    func resetState() {
+    mutating func resetState() {
         refillCards(numberOfCards: cards.count)
         indexOfOneAndOnlyFaceUpCard = nil
         score = 0
